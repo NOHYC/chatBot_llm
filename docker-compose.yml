@@ -1,0 +1,44 @@
+services:
+  vllm:
+    build:
+      context: ./vllm
+      dockerfile: Dockerfile
+    gpus: all
+    volumes:
+      - ${MODEL_DIR}:/models:ro
+    command: >
+      python -m vllm.entrypoints.openai.api_server
+      --model /models/${MODEL_SUBPATH}
+      --host 0.0.0.0
+      --port ${VLLM_PORT}
+      --dtype ${VLLM_DTYPE}
+      --max-model-len ${VLLM_MAX_MODEL_LEN}
+      --gpu-memory-utilization ${VLLM_GPU_MEM_UTIL}
+    expose:
+      - "${VLLM_PORT}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://127.0.0.1:${VLLM_PORT}/v1/models').read(); print('ok')\""]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    environment:
+      - VLLM_BASE_URL=http://vllm:${VLLM_PORT}
+    depends_on:
+      vllm:
+        condition: service_healthy
+    ports:
+      - "${HOST_PUBLIC_PORT}:${GATEWAY_PORT}"
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8001/health >/dev/null"]
+      interval: 10s
+      timeout: 3s
+      retries: 30
+
