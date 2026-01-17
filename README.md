@@ -1,10 +1,7 @@
-
-간단한 개요
-
+# Soccer ChatBot
 
 Track2 아이디어 개발 부문 : K리그-서울시립대 공개 AI 경진대회 참가
 https://dacon.io/competitions/official/236648/overview/description
-
 
 이 저장소는 로컬 서비스 `gateway`와 실험용 `vllm` 디렉토리를 포함한 간단한 LLM 실험 및 배포용 프로젝트입니다. 주요 목적은 모델 파인튜닝(QLoRA), 실험 기록, 그리고 경량 서비스로의 배포 예시를 제공하는 것입니다.
 
@@ -20,29 +17,29 @@ https://dacon.io/competitions/official/236648/overview/description
 
 빠른 시작
 
-1) 의존성 설치 (개발 환경)
-
+1) ngrok 설치 후 토큰 추 포트 설정
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r gateway/requirements.txt
+curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
+  | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null \
+  && echo "deb https://ngrok-agent.s3.amazonaws.com bookworm main" \
+  | sudo tee /etc/apt/sources.list.d/ngrok.list \
+  && sudo apt update \
+  && sudo apt install ngrok
+
+ngrok config add-authtoken <token>
+
+ngrok http 8001
 ```
 
-2) 로컬 서버 실행
 
-```bash
-cd gateway
-./run.sh
-```
-
-3) 도커로 전체 스택 실행 (docker-compose 사용)
+2) 도커로 전체 스택 실행 (docker-compose 사용)
 
 ```bash
 docker compose up --build
 ```
 
-vLLM 실험 노트
-- `vllm/(colab)Dacon.ipynb`는 Google Colab에서 실행되었으며, NVIDIA A100에서 QLoRA로 LLM 모델 파인튜닝을 수행한 실험 기록입니다.
+vLLM 학습 및 추론
+- `vllm/(colab)Dacon.ipynb`는 Google Colab에서 실행되었으며, NVIDIA A100에서 QLoRA로 LLM 모델(beomi/Llama-3-Open-Ko-8B) 파인튜닝을 수행한 기록입니다.
 - vLLM 관련 이미지는 `vllm/Dockerfile`을 참고해 빌드할 수 있습니다.
 
 재현 및 체크포인트
