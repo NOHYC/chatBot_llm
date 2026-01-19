@@ -67,6 +67,11 @@ rclone sync drive:MyDrive/model/kl_league_qlora_out /home/noh/gdrive/kl_league_q
 
 프론트엔드 연동
 - 로컬/원격 `gateway` 서비스를 `ngrok`으로 노출하여 프론트엔드와 연결했습니다. 현재 프론트엔드 배포 주소는 https://soccer-tau-olive.vercel.app/ 입니다.
+
+<a href="https://soccer-tau-olive.vercel.app/">
+  <img src="view.png" width="400"/>
+</a>
+
 - 프론트엔드 관련 구현 및 설정 정보는 다음 저장소에서 확인할 수 있습니다:
 
 - https://github.com/grden/soccer
