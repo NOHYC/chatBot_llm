@@ -1,9 +1,15 @@
 # Soccer ChatBot
 
-Track2 아이디어 개발 부문 : K리그-서울시립대 공개 AI 경진대회 참가
+[입상]Track2 아이디어 개발 부문 : K리그-서울시립대 공개 AI 경진대회 참가
+링크 : 
+
 https://dacon.io/competitions/official/236648/overview/description
 
-이 저장소는 로컬 서비스 `gateway`와 실험용 `vllm` 디렉토리를 포함한 간단한 LLM 실험 및 배포용 프로젝트입니다. 주요 목적은 모델 파인튜닝(QLoRA), 실험 기록, 그리고 경량 서비스로의 배포 예시를 제공하는 것입니다.
+최종 순위 : 16위
+
+https://dacon.io/competitions/official/236648/talkboard/416240?page=1&dtype=recent
+
+이 저장소는 로컬 서비스 `gateway`와 실험용 `vllm` 디렉토리를 포함한 간단한 LLM 및 배포용 프로젝트입니다. 주요 목적은 모델 파인튜닝(QLoRA), 그리고 경량 서비스로의 배포 예시를 제공하는 것입니다.
 
 ![Overview](1212.png)
 
